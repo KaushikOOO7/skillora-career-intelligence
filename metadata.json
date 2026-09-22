@@ -1,0 +1,11 @@
+{
+  "name": "Skillora",
+  "description": "Live Career Intelligence Map for discovering nearby tech companies, verified career opportunities, required skill analytics, and corporate research.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
+

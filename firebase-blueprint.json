@@ -1,0 +1,255 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with career preferences and skill portfolio",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user",
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User full name"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target job or internship role"
+        },
+        "targetCompany": {
+          "type": "string",
+          "description": "Target company name"
+        },
+        "skills": {
+          "type": "array",
+          "description": "User acquired technical and soft skills"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "email", "createdAt"]
+    },
+    "Company": {
+      "title": "Company",
+      "description": "Verified business or employer place record",
+      "type": "object",
+      "properties": {
+        "placeId": {
+          "type": "string",
+          "description": "Google Place ID or unique company identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Company name"
+        },
+        "latitude": {
+          "type": "number",
+          "description": "Latitude coordinate"
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Longitude coordinate"
+        },
+        "address": {
+          "type": "string",
+          "description": "Physical street address"
+        },
+        "website": {
+          "type": "string",
+          "description": "Official company website URL"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Public company telephone number"
+        },
+        "businessType": {
+          "type": "string",
+          "description": "Industry category such as Software, AI/ML, Automotive, etc."
+        },
+        "companyType": {
+          "type": "string",
+          "description": "Type: Startup, MNC, Product, Service, Research"
+        },
+        "source": {
+          "type": "string",
+          "description": "Source attribution of the place information"
+        },
+        "lastVerified": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["placeId", "name", "latitude", "longitude", "businessType", "source"]
+    },
+    "Opportunity": {
+      "title": "Opportunity",
+      "description": "Verified job opening or internship posting",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique opportunity identifier"
+        },
+        "companyId": {
+          "type": "string",
+          "description": "Identifier of the employer company"
+        },
+        "title": {
+          "type": "string",
+          "description": "Role title"
+        },
+        "location": {
+          "type": "string",
+          "description": "Workplace location or Remote"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Internship", "Full-time", "Part-time", "Fresher", "Experienced", "Remote"]
+        },
+        "experience": {
+          "type": "string",
+          "description": "Experience requirement level"
+        },
+        "skills": {
+          "type": "array",
+          "description": "Required technology and skill stack"
+        },
+        "postedDate": {
+          "type": "string"
+        },
+        "deadline": {
+          "type": "string"
+        },
+        "applicationUrl": {
+          "type": "string",
+          "description": "Official application URL"
+        },
+        "source": {
+          "type": "string",
+          "description": "Source attribution"
+        },
+        "lastVerified": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "companyId", "title", "type", "source"]
+    },
+    "SavedCompany": {
+      "title": "SavedCompany",
+      "description": "User bookmarked target company",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "companyId": {
+          "type": "string",
+          "description": "Target company ID"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "savedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "companyId", "companyName", "savedAt"]
+    },
+    "ApplicationTracker": {
+      "title": "ApplicationTracker",
+      "description": "Personal job application lifecycle stage tracker",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "roleTitle": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Saved", "Applied", "Assessment", "Interview", "Offer"]
+        },
+        "notes": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "userId", "companyName", "roleTitle", "status", "updatedAt"]
+    },
+    "OpportunityAlert": {
+      "title": "OpportunityAlert",
+      "description": "Stored alert criteria for targeted opportunity monitoring",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "query": {
+          "type": "string"
+        },
+        "radiusKm": {
+          "type": "number"
+        },
+        "roleType": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "userId", "query", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Private user account profile"
+    },
+    "/companies/{companyId}": {
+      "schema": "Company",
+      "description": "Public company directory records"
+    },
+    "/opportunities/{opportunityId}": {
+      "schema": "Opportunity",
+      "description": "Public job and internship records"
+    },
+    "/users/{userId}/savedCompanies/{savedId}": {
+      "schema": "SavedCompany",
+      "description": "User specific saved target companies"
+    },
+    "/users/{userId}/applications/{appId}": {
+      "schema": "ApplicationTracker",
+      "description": "User specific job application tracking stages"
+    },
+    "/users/{userId}/alerts/{alertId}": {
+      "schema": "OpportunityAlert",
+      "description": "User specific opportunity notifications"
+    }
+  }
+}
